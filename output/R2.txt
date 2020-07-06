@@ -1,0 +1,214 @@
+Building configuration...
+
+Current configuration : 2836 bytes
+!
+! Last configuration change at 15:26:46 UTC Mon Jul 6 2020 by commadmin
+!
+version 15.5
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no platform punt-keepalive disable-kernel-core
+platform console virtual
+!
+hostname R2
+!
+boot-start-marker
+boot-end-marker
+!
+!
+no logging console
+enable secret 5 $1$lqS6$euhR7zVulimSQoh2gcMX/0
+!
+no aaa new-model
+!
+ip vrf MGMT
+!
+ip multicast-routing distributed
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+
+
+
+ip domain name zeb.com
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+subscriber templating
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+license udi pid CSR1000V sn 9TLV0IIEZ71
+!
+spanning-tree extend system-id
+!
+username cisco privilege 15 secret 5 $1$j2P8$1nz0LqF6uV7TiVdCLDIE9.
+username commadmin privilege 15 password 0 cisco
+username ansible privilege 15 password 0 ansible
+!
+redundancy
+!
+!
+!
+!
+!
+cdp run
+!
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+! 
+! 
+! 
+! 
+! 
+! 
+!
+!
+interface Loopback0
+ ip address 2.2.2.2 255.255.255.255
+ ip pim sparse-mode
+!
+interface Loopback1
+ ip address 2.2.2.1 255.255.255.255
+!
+interface Loopback22
+ ip address 22.22.22.22 255.255.255.255
+!
+interface GigabitEthernet1
+ description CONNECTION TO R4
+ ip address 172.16.0.1 255.255.255.252
+ negotiation auto
+!
+interface GigabitEthernet2
+ description CONNECTION TO R5
+ ip address 172.16.0.22 255.255.255.252
+ negotiation auto
+!
+interface GigabitEthernet3
+ ip vrf forwarding MGMT
+ ip address 192.168.1.252 255.255.255.0
+ negotiation auto
+!
+interface GigabitEthernet4
+ description CONNECTION TO R8
+ ip address 172.16.0.25 255.255.255.252
+ negotiation auto
+!
+interface GigabitEthernet5
+ no ip address
+ shutdown
+ negotiation auto
+!
+interface GigabitEthernet6
+ no ip address
+ shutdown
+ negotiation auto
+!
+interface GigabitEthernet7
+ no ip address
+ shutdown
+ negotiation auto
+!
+interface GigabitEthernet8
+ no ip address
+ shutdown
+ negotiation auto
+!
+!
+router eigrp ZEB
+ !
+ address-family ipv4 unicast autonomous-system 1
+  !
+  topology base
+   distribute-list 101 out GigabitEthernet2
+  exit-af-topology
+  network 0.0.0.0
+  eigrp router-id 2.2.2.2
+ exit-address-family
+!
+!
+virtual-service csr_mgmt
+!
+ip forward-protocol nd
+!
+no ip http server
+no ip http secure-server
+ip ftp source-interface GigabitEthernet3
+ip tftp source-interface GigabitEthernet3
+ip ssh source-interface GigabitEthernet3
+ip ssh version 2
+ip scp server enable
+!
+access-list 1 permit 192.168.1.0 0.0.0.255 log
+access-list 101 permit ip host 2.2.2.0 any log
+access-list 101 permit ip host 22.22.22.22 any log
+access-list 101 deny   ip any any
+!
+!
+!
+control-plane
+!
+ !
+ !
+ !
+ !
+!
+!
+!
+!
+!
+line con 0
+ stopbits 1
+line vty 0 4
+ session-timeout 35791 
+ privilege level 15
+ password cisco
+ login local
+ transport input all
+ transport output all
+line vty 5 15
+ session-timeout 35791 
+ privilege level 15
+ password cisco
+ login
+ transport input all
+ transport output all
+!
+!
+end

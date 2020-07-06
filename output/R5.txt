@@ -1,0 +1,214 @@
+Building configuration...
+
+Current configuration : 2740 bytes
+!
+! Last configuration change at 14:57:04 UTC Mon Jul 6 2020 by ansible
+!
+version 15.5
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no platform punt-keepalive disable-kernel-core
+platform console virtual
+!
+hostname R5
+!
+boot-start-marker
+boot-end-marker
+!
+!
+enable secret 5 $1$ZzW/$Vg5rB9M2u1eKdY4P6Ini.1
+!
+no aaa new-model
+!
+ip vrf MGMT
+!
+ip multicast-routing distributed
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+
+
+
+ip domain name www.zeb.com
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+subscriber templating
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+license udi pid CSR1000V sn 96ZUBTDGVXY
+!
+spanning-tree extend system-id
+!
+username admin privilege 15 password 0 cisco
+username commadmin privilege 15 password 0 cisco
+username ansible privilege 15 password 0 ansible
+!
+redundancy
+!
+!
+!
+!
+!
+cdp run
+!
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+! 
+! 
+! 
+! 
+! 
+! 
+!
+!
+interface Loopback0
+ ip address 5.5.5.5 255.255.255.255
+ ip pim sparse-mode
+!
+interface Loopback1
+ ip address 5.5.5.6 255.255.255.255
+!
+interface GigabitEthernet1
+ description CONNECTION TO R4
+ ip address 172.16.0.10 255.255.255.252
+ ip policy route-map denyr7
+ negotiation auto
+!
+interface GigabitEthernet2
+ description CONNECTION TO R6
+ ip address 172.16.0.13 255.255.255.252
+ ip policy route-map deny
+ negotiation auto
+!
+interface GigabitEthernet3
+ description MGMT
+ ip vrf forwarding MGMT
+ ip address 192.168.1.249 255.255.255.0
+ negotiation auto
+!
+interface GigabitEthernet4
+ description CONNECTION TO R2
+ ip address 172.16.0.21 255.255.255.252
+ negotiation auto
+!
+interface GigabitEthernet5
+ description CONNECTION TO R8
+ ip address 172.16.0.37 255.255.255.252
+ negotiation auto
+!
+interface GigabitEthernet6
+ no ip address
+ shutdown
+ negotiation auto
+!
+interface GigabitEthernet7
+ no ip address
+ shutdown
+ negotiation auto
+!
+interface GigabitEthernet8
+ no ip address
+ shutdown
+ negotiation auto
+!
+interface GigabitEthernet9
+ no ip address
+ shutdown
+ negotiation auto
+!
+!
+router eigrp 1
+ network 0.0.0.0
+!
+router ospf 1
+ network 22.22.22.22 0.0.0.1 area 0
+!
+!
+virtual-service csr_mgmt
+!
+ip forward-protocol nd
+!
+no ip http server
+no ip http secure-server
+ip tftp source-interface GigabitEthernet3
+ip ssh source-interface GigabitEthernet3
+ip ssh version 2
+ip scp server enable
+!
+access-list 101 permit ip host 6.6.6.6 host 7.7.7.7
+access-list 102 deny   ip any any
+!
+route-map deny permit 20
+ match ip address 101
+ set ip next-hop 172.16.0.22
+!
+!
+!
+control-plane
+!
+ !
+ !
+ !
+ !
+!
+!
+!
+!
+!
+line con 0
+ stopbits 1
+line vty 0 4
+ session-timeout 35791 
+ privilege level 15
+ password cisco
+ login local
+ transport input all
+ transport output all
+line vty 5 15
+ session-timeout 35791 
+ privilege level 15
+ password cisco
+ login local
+ transport input all
+ transport output all
+!
+!
+end

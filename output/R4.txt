@@ -1,0 +1,211 @@
+Building configuration...
+
+Current configuration : 2652 bytes
+!
+! Last configuration change at 14:57:04 UTC Mon Jul 6 2020 by ansible
+!
+version 15.5
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no platform punt-keepalive disable-kernel-core
+platform console virtual
+!
+hostname R4
+!
+boot-start-marker
+boot-end-marker
+!
+!
+enable secret 5 $1$Ex1F$SlWnsPbPJdK4x1HBOo1hF/
+!
+no aaa new-model
+!
+ip vrf MGMT
+!
+ip multicast-routing distributed
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+
+
+
+ip domain name www.zeb.com
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+subscriber templating
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+license udi pid CSR1000V sn 95NQJ6FXCNF
+!
+spanning-tree extend system-id
+!
+username admin privilege 15 password 0 cisco
+username commadmin privilege 15 password 0 cisco
+username ansible privilege 15 password 0 ansible
+!
+redundancy
+!
+!
+!
+!
+!
+cdp run
+!
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+! 
+! 
+! 
+! 
+! 
+! 
+!
+!
+interface Loopback0
+ ip address 4.4.4.4 255.255.255.255
+!
+interface Loopback1
+ ip address 4.4.4.5 255.255.255.255
+!
+interface GigabitEthernet1
+ description CONNECTION TO R5
+ ip address 172.16.0.9 255.255.255.252
+ negotiation auto
+!
+interface GigabitEthernet2
+ description CONNECTION TO R3
+ ip address 172.16.0.6 255.255.255.252
+ negotiation auto
+!
+interface GigabitEthernet3
+ description MGMT
+ ip vrf forwarding MGMT
+ ip address 192.168.1.250 255.255.255.0
+ negotiation auto
+!
+interface GigabitEthernet4
+ ip address 172.16.0.17 255.255.255.252
+ negotiation auto
+!
+interface GigabitEthernet5
+ description CONNECTION TO R8
+ ip address 172.16.0.33 255.255.255.252
+ negotiation auto
+!
+interface GigabitEthernet6
+ no ip address
+ shutdown
+ negotiation auto
+!
+interface GigabitEthernet7
+ no ip address
+ shutdown
+ negotiation auto
+!
+interface GigabitEthernet8
+ no ip address
+ shutdown
+ negotiation auto
+!
+interface GigabitEthernet9
+ no ip address
+ shutdown
+ negotiation auto
+!
+!
+router eigrp Atreyu
+ !
+ address-family ipv4 unicast autonomous-system 1
+  !
+  topology base
+  exit-af-topology
+  network 0.0.0.0
+ exit-address-family
+!
+router ospf 1
+ network 22.22.22.22 0.0.0.1 area 0
+!
+!
+virtual-service csr_mgmt
+!
+ip forward-protocol nd
+ip pim rp-address 4.4.4.4 30
+ip pim send-rp-discovery scope 6 interval 30
+!
+no ip http server
+no ip http secure-server
+!
+access-list 30 deny   224.0.0.39
+access-list 30 deny   224.0.0.40
+access-list 30 permit 224.0.0.0 15.255.255.255
+!
+!
+!
+control-plane
+!
+ !
+ !
+ !
+ !
+!
+!
+!
+!
+!
+line con 0
+ stopbits 1
+line vty 0 4
+ session-timeout 3720 
+ privilege level 15
+ password cisco
+ login local
+ transport input ssh
+ transport output all
+line vty 5 15
+ session-timeout 3720 
+ privilege level 15
+ password cisco
+ login local
+ transport input ssh
+ transport output all
+!
+!
+end

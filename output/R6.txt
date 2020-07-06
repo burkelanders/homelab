@@ -1,0 +1,200 @@
+Building configuration...
+
+Current configuration : 2327 bytes
+!
+! Last configuration change at 14:57:03 UTC Mon Jul 6 2020 by ansible
+!
+version 15.5
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no platform punt-keepalive disable-kernel-core
+platform console virtual
+!
+hostname R6
+!
+boot-start-marker
+boot-end-marker
+!
+!
+enable secret 5 $1$2JxC$mBfG244DrK9SBiV3qf2ZL0
+!
+no aaa new-model
+!
+ip vrf MGMT
+!
+ip multicast-routing distributed
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+
+
+
+ip domain name www.zeb.com
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+subscriber templating
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+license udi pid CSR1000V sn 9BJ83QRCF04
+!
+spanning-tree extend system-id
+!
+username admin privilege 15 password 0 cisco
+username commadmin privilege 15 password 0 cisco
+username ansible privilege 15 password 0 ansible
+!
+redundancy
+!
+!
+!
+!
+!
+cdp run
+!
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+! 
+! 
+! 
+! 
+! 
+! 
+!
+!
+interface Loopback0
+ ip address 6.6.6.6 255.255.255.255
+ ip pim sparse-mode
+!
+interface Loopback1
+ ip address 66.66.66.66 255.255.255.255
+!
+interface Loopback2
+ ip address 6.6.6.5 255.255.255.255
+!
+interface GigabitEthernet1
+ description CONNECTION TO R5
+ ip address 172.16.0.14 255.255.255.252
+ negotiation auto
+!
+interface GigabitEthernet2
+ no ip address
+ negotiation auto
+!
+interface GigabitEthernet3
+ description MGMT
+ ip vrf forwarding MGMT
+ ip address 192.168.1.248 255.255.255.0
+ negotiation auto
+!
+interface GigabitEthernet4
+ no ip address
+ shutdown
+ negotiation auto
+!
+interface GigabitEthernet5
+ no ip address
+ shutdown
+ negotiation auto
+!
+interface GigabitEthernet6
+ no ip address
+ shutdown
+ negotiation auto
+!
+interface GigabitEthernet7
+ no ip address
+ shutdown
+ negotiation auto
+!
+!
+router eigrp 1
+ network 66.66.66.66 0.0.0.0
+ network 172.16.0.0
+ redistribute ospf 6 metric 5000 40 240 60 1436
+ eigrp router-id 6.6.6.6
+!
+router ospf 6
+ network 6.6.6.5 0.0.0.0 area 0
+!
+router ospf 1
+ network 22.22.22.22 0.0.0.1 area 0
+!
+!
+virtual-service csr_mgmt
+!
+ip forward-protocol nd
+!
+no ip http server
+no ip http secure-server
+!
+!
+!
+!
+control-plane
+!
+ !
+ !
+ !
+ !
+!
+!
+!
+!
+!
+line con 0
+ stopbits 1
+line vty 0 4
+ session-timeout 35791 
+ privilege level 15
+ password cisco
+ login local
+ transport input all
+ transport output all
+line vty 5 15
+ session-timeout 35791 
+ privilege level 15
+ password cisco
+ login local
+ transport input all
+ transport output all
+!
+!
+end
