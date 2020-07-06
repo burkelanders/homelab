@@ -1,0 +1,9 @@
+[csr]
+R3  ansible_ssh_pass=ansible ansible_ssh_user=ansible   
+R4  ansible_ssh_pass=ansible ansible_ssh_user=ansible
+R5  ansible_ssh_pass=ansible ansible_ssh_user=ansible
+R6  ansible_ssh_pass=ansible ansible_ssh_user=ansible
+R2  ansible_ssh_pass=ansible ansible_ssh_user=ansible
+R7  ansible_ssh_pass=ansible ansible_ssh_user=ansible
+
+
