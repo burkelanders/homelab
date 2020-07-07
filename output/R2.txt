@@ -69,7 +69,6 @@ license udi pid CSR1000V sn 9TLV0IIEZ71
 spanning-tree extend system-id
 !
 username cisco privilege 15 secret 5 $1$j2P8$1nz0LqF6uV7TiVdCLDIE9.
-username commadmin privilege 15 password 0 cisco
 username ansible privilege 15 password 0 ansible
 !
 redundancy
