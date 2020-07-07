@@ -69,7 +69,6 @@ license udi pid CSR1000V sn 9WSG0L609YH
 spanning-tree extend system-id
 !
 username admin privilege 15 password 0 cisco
-username commadmin privilege 15 password 0 cisco
 username cisco privilege 15 password 0 cisco
 username zeb privilege 15 password 0 password
 username ansible privilege 15 password 0 ansible
