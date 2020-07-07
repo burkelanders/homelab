@@ -73,7 +73,6 @@ spanning-tree extend system-id
 !
 username cisco privilege 15 password 0 cisco
 username admin privilege 15 password 0 cisco
-username commadmin privilege 15 password 0 cisco
 username zeb privilege 15 password 0 password
 username ansible privilege 15 password 0 ansible
 username root privilege 15 password 0 root
